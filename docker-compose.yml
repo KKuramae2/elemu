@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  controller:
+    build: .
+    container_name: elemu_controller
+    networks:
+      elemu_net:
+        ipv4_address: 172.20.0.2
+    ports:
+      - "3001:8880"
+    expose:
+      - "3610/udp"
+    environment:
+      - NODE_ENV=production
+
+  device:
+    build: .
+    container_name: elemu_device
+    networks:
+      elemu_net:
+        ipv4_address: 172.20.0.3
+    ports:
+      - "3002:8880"
+    expose:
+      - "3610/udp"
+    environment:
+      - NODE_ENV=production
+
+networks:
+  elemu_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
