@@ -3,6 +3,9 @@ services:
   controller:
     build: .
     container_name: elemu_controller
+    volumes:
+      - ./data/controller:/app/data
+      - ./logs/controller:/app/logs
     networks:
       elemu_net:
         ipv4_address: 172.20.0.2
@@ -16,6 +19,9 @@ services:
   device:
     build: .
     container_name: elemu_device
+    volumes:
+      - ./data/device:/app/data
+      - ./logs/device:/app/logs
     networks:
       elemu_net:
         ipv4_address: 172.20.0.3
