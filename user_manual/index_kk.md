@@ -26,17 +26,17 @@ $ docker compose up -d
 * Controller 用 Device 用いずれも初回起動時は蓄電池デバイスが１台登録されるようにしています（KAITのエミュレータは家庭用エアコンでしたが変更しています）。Controller 用については、初回起動時に、正式ユーザマニュアルの [コントローラ](index.md#%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9) を参考にした修正が必要です。
 * Dockerでビルドするたびにエミュレータが初期化されないよう、ホスト側の ./data/controller, ./logs/controller, ./data/device, ./logs/controller にデータを保存するようにしています。
 
-## <a id="webapi-to-drDevices">WebAPI経由ELデバイスのプロパティアクセス</a>
+## <a id="webapi-to-elDevices">WebAPI経由ELデバイスのプロパティアクセス</a>
 
 * WebAPIで ECHONET Liteのリモートデバイスに対してプロパティアクセスが可能です。
 * まず、コントローラ用エミュレータのUIから、リモートデバイスの機器探索をする必要があります。この探索により、リモートデバイスのEOJとIPアドレスの紐づけがされます。
 デプロイ後も、必ずコントローラ用エミュレータ画面から、機器探索を再度実行するようにしてください。
 * APIは以下の通り
 ```
-GET {baseUrl}/api/drDevices/{eoj_id}/properties/{epc_id もしくは MRA で定義されたプロパティ名}
+GET {baseUrl}/api/elDevices/{eoj_id}/properties/{epc_id もしくは MRA で定義されたプロパティ名}
 ```
 ```
-PUT {baseUrl}/api/drDevices/{eoj_id}/properties/{epc_id もしくは MRA で定義されたプロパティ名}
+PUT {baseUrl}/api/elDevices/{eoj_id}/properties/{epc_id もしくは MRA で定義されたプロパティ名}
 Content-Type: application/json
 
 {
@@ -46,6 +46,7 @@ Content-Type: application/json
 
 ## <a id="to-do">To do</a>
 
+* EOJだけでなく特定デバイス名で指定できるようにする
 * 独立した別メソッドで、コントローラ側で何等かの処理をして、[WebAPI経由ELデバイスのプロパティアクセス](#webapi経由elデバイスのプロパティアクセス)等の処理をしたい。現行エミュレータへの影響を与えずに処理を追加したい。
 * 時刻指定によるコントローラ用エミュレータのスケジュール動作実現。現行エミュレータへの影響を与えずに処理を追加したい。
 * OpenAPI利用による動作定義。現行エミュレータへの影響を与えずに処理を追加したい。
